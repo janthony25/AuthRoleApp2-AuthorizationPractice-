@@ -15,13 +15,22 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+// Use this to be able to use default user settings 
+builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 {
     options.SignIn.RequireConfirmedEmail = true;
-    options.SignIn.RequireConfirmedAccount = true;
 })
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
+
+//builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+//{
+//    options.SignIn.RequireConfirmedEmail = true;
+//    options.SignIn.RequireConfirmedAccount = true;
+//})
+//    .AddEntityFrameworkStores<ApplicationDbContext>()
+//    .AddDefaultTokenProviders();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
